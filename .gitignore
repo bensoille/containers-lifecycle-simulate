@@ -13,6 +13,9 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Refresh time file
+src/time-refresh.ts
+
 # Runtime data
 pids
 *.pid

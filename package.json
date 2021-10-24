@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "restart": "touch ./src/index.ts",
+    "restart": "date > ./src/time-refresh.ts",
     "start": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
     "eslint:fix": "eslint --fix"
   },
