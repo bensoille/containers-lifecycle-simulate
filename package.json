@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node ./src/index.ts",
-    "start-dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
+    "restart": "touch ./src/index.ts",
+    "start": "nodemon --watch \"*.ts\" --exec \"ts-node\" ./src/index.ts",
     "eslint:fix": "eslint --fix"
   },
   "devDependencies": {
