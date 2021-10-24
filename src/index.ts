@@ -1,13 +1,10 @@
 import express from 'express';
-import dotenv from 'dotenv';
 
 import { connectToDatabase } from './databaseConnection';
 import { containerRoute } from './routes/container.route';
 
-dotenv.config();
 
-const HOST = process.env.HOST || 'http://localhost';
-const PORT = parseInt(process.env.PORT || '4500');
+var config = require('./config/config')
 
 const app = express();
 
@@ -20,13 +17,13 @@ app.use('/containers', containerRoute());
 app.get('/', (req, res) => {
   // console.log(req) ;
   res.status(202).json({ status: "Processing data.." });
-  setTimeout( () => console.log('after 2s', HOST, PORT), 2000) ;
+  setTimeout( () => console.log('after 2s', config.listen_host, config.listen_port), 2000) ;
   // return res.json({ message: 'Hello World!' });
 });
 
-app.listen(PORT, async () => {
-  console.log(HOST, PORT) ;
+app.listen(config.listen_port, async () => {
+  console.log(config.listen_host, config.listen_port) ;
   await connectToDatabase();
 
-  console.log(`Application started on URL ${HOST}:${PORT} 🎉`);
+  console.log(`Application started on URL ${config.listen_host}:${config.listen_port} 🎉`);
 });
