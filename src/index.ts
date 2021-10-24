@@ -23,7 +23,13 @@ app.get('/', (req, res) => {
 
 app.listen(config.listen_port, async () => {
   console.log(config.listen_host, config.listen_port) ;
-  await connectToDatabase();
+  if(!!config.mongo_host) {
+    console.log(`Connecting to mongo host ${config.mongo_host}`);
+    await connectToDatabase();
+  }
+  else {
+    console.log(`NOT connecting to mongo host ${config.mongo_host}`);
+  }
 
   console.log(`Application started on URL ${config.listen_host}:${config.listen_port} 🎉`);
 });
