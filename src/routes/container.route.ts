@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { createContainer, deleteContainer, getAllContainers, getContainer, updateContainer, stopContainer } from '../controllers/container.controller';
+import { createContainer, getAllContainers, getRunningContainers, stopContainer } from '../controllers/container.controller';
 
 const containerRoute = () => {
   const router = Router();
 
   router.post('/', createContainer);
 
-  router.get('/', getAllContainers);
+  router.get('/', getRunningContainers);
 
   router.delete('/', stopContainer);
 

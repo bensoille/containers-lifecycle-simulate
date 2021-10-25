@@ -57,7 +57,11 @@ const getAllContainers = async (req: Request, res: Response) => {
 };
 
 
+const getRunningContainers = async (req: Request, res: Response) => {
+  const containers = await Container.find({"status": { $in: ["STARTING","RUNNING"] } }).sort('-createdAt').exec();
 
+  return res.status(200).json({ data: containers });
+};
 
 
 
@@ -131,4 +135,4 @@ const deleteContainer = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'Container deleted successfully.' });
 };
 
-export { createContainer, deleteContainer, getAllContainers, getContainer, updateContainer, stopContainer };
+export { createContainer, deleteContainer, getRunningContainers, getAllContainers, getContainer, updateContainer, stopContainer };
