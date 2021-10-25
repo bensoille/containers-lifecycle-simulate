@@ -49,6 +49,7 @@ const createContainer = async (req: Request, res: Response) => {
 //  |   / -_) _` / _` | | | (_-<  _|
 // |_|_\___\__,_\__,_| |_|_/__/\__|
 
+
 const getAllContainers = async (req: Request, res: Response) => {
   // const containers = await Container.find({"status": { $in: ["STARTING","RUNNING"] } }).sort('-createdAt').exec();
   const containers = await Container.find({}).sort('-createdAt').exec();
@@ -64,7 +65,11 @@ const getRunningContainers = async (req: Request, res: Response) => {
 };
 
 
-
+//   ___ _            
+// / __| |_ ___ _ __ 
+// \__ \  _/ _ \ '_ \
+// |___/\__\___/ .__/
+//             |_|  
 const stopContainer = async (req: Request, res: Response) => {
   const { application } = req.body;
   console.log("Stopping containers of application", application, req.body) ;
@@ -86,53 +91,4 @@ const stopContainer = async (req: Request, res: Response) => {
 
 
 
-
-const getContainer = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const container = await Container.findOne({ _id: id });
-
-  if (!container) {
-    return res.status(404).json({ message: `Container with id "${id}" not found.` });
-  }
-
-  return res.status(200).json({ data: container });
-};
-
-
-
-
-
-
-
-
-const updateContainer = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { description, name } = req.body;
-
-  const container = await Container.findOne({ _id: id });
-
-  if (!container) {
-    return res.status(404).json({ message: `Container with id "${id}" not found.` });
-  }
-
-  if (!name || !description) {
-    return res.status(422).json({ message: 'The fields name and description are required' });
-  }
-
-  await Container.updateOne({ _id: id }, { name, description });
-
-  const containerUpdated = await Container.findById(id, { name, description });
-
-  return res.status(200).json({ data: containerUpdated });
-};
-
-const deleteContainer = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  await Container.findByIdAndDelete(id);
-
-  return res.status(200).json({ message: 'Container deleted successfully.' });
-};
-
-export { createContainer, deleteContainer, getRunningContainers, getAllContainers, getContainer, updateContainer, stopContainer };
+export { createContainer, getRunningContainers, getAllContainers, stopContainer };

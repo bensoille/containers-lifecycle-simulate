@@ -15,10 +15,7 @@ app.use('/containers', containerRoute());
 // app.use('/', userRoute());
 
 app.get('/', (req, res) => {
-  // console.log(req) ;
-  res.status(202).json({ status: "Processing data.." });
-  setTimeout( () => console.log('after 2s', config.listen_host, config.listen_port), 2000) ;
-  // return res.json({ message: 'Hello World!' });
+  return res.status(404).json({ message: 'Nothing there' }); ;
 });
 
 app.listen(config.listen_port, async () => {
