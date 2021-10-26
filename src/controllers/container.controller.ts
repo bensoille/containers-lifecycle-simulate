@@ -30,7 +30,7 @@ const createContainer = async (req: Request, res: Response) => {
 
   const containerCreated = await Container.create(containerInput);
 
-  res.status(202).json({ data: containerCreated });
+  res.status(202).json(containerCreated);
 
 
   setContainerStatus("RUNNING", containerCreated, 20000) ;
@@ -53,14 +53,14 @@ const getAllContainers = async (req: Request, res: Response) => {
   // const containers = await Container.find({"status": { $in: ["STARTING","RUNNING"] } }).sort('-createdAt').exec();
   const containers = await Container.find({}).sort('-createdAt').exec();
 
-  return res.status(200).json({ data: containers });
+  return res.status(200).json(containers);
 };
 
 
 const getRunningContainers = async (req: Request, res: Response) => {
   const containers = await Container.find({"status": { $in: ["STARTING","RUNNING"] } }).sort('-createdAt').exec();
 
-  return res.status(200).json({ data: containers });
+  return res.status(200).json(containers);
 };
 
 
@@ -78,7 +78,7 @@ const stopContainer = async (req: Request, res: Response) => {
 
   const containers = await Container.find({ application: { $eq: application }, status: { $in :["STARTING","RUNNING"] } });
 
-  res.status(202).json({ data: containers });
+  res.status(202).json(containers);
 
   let status = "STOPPING" ;
   await Container.updateMany({ application: { $eq: application }, status: { $in :["STARTING","RUNNING"] } }, { status })
