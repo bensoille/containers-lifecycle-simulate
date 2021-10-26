@@ -14,7 +14,6 @@ const setContainerStatus = async (status, containerCreated, timeout) => {
 
 const createContainer = async (req: Request, res: Response) => {
   const { application } = req.body;
-  console.log("%s %s",application, req.body) ;
   if (!application) {
     return res.status(422).json({ message: 'The field application is required' });
   }
@@ -72,20 +71,20 @@ const getRunningContainers = async (req: Request, res: Response) => {
 //             |_|  
 const stopContainer = async (req: Request, res: Response) => {
   const { application } = req.body;
-  console.log("Stopping containers of application", application, req.body) ;
+  console.log("Stopping containers of application %s", application) ;
   if (!application) {
     return res.status(422).json({ message: 'The field application is required' });
   }
 
-  const containers = await Container.find({ application: application, status: { $in :["STARTING","RUNNING"] } });
+  const containers = await Container.find({ application: { $eq: application }, status: { $in :["STARTING","RUNNING"] } });
 
   res.status(202).json({ data: containers });
 
   let status = "STOPPING" ;
-  await Container.updateMany({ application: application, status: { $in :["STARTING","RUNNING"] } }, { status })
+  await Container.updateMany({ application: { $eq: application }, status: { $in :["STARTING","RUNNING"] } }, { status })
 
   status = "TERMINATED" ;
-  setTimeout( async () => await Container.updateMany({ application: application, status: "STOPPING" }, { status }), 2000 ) ;
+  setTimeout( async () => await Container.updateMany({ application: { $eq: application }, status: "STOPPING" }, { status }), 2000 ) ;
 
 };
 
