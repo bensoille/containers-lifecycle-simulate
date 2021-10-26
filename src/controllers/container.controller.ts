@@ -14,7 +14,7 @@ const setContainerStatus = async (status, containerCreated, timeout) => {
 
 const createContainer = async (req: Request, res: Response) => {
   const { application } = req.body;
-  console.log(application, req.body) ;
+  console.log("%s %s",application, req.body) ;
   if (!application) {
     return res.status(422).json({ message: 'The field application is required' });
   }
